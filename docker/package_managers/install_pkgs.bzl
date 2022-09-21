@@ -172,7 +172,7 @@ _attrs = {
         mandatory = True,
     ),
     "docker_run_flags": attr.string_list(
-        dock = "list of docker run flags to pass.",
+        doc = "list of docker run flags to pass.",
         mandatory = False,
     ),
     "_config_stripper": attr.label(
