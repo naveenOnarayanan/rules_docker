@@ -136,7 +136,7 @@ def _impl(ctx, image_tar = None, packages = None, additional_repos = None, outpu
         substitutions = {
             "%{docker_flags}": " ".join(toolchain_info.docker_flags),
             "%{docker_tool_path}": docker_path(toolchain_info),
-            "%{docker_run_flags}": ctx.attr.docker_run_flags,
+            "%{docker_run_flags}": " ".join(ctx.attr.docker_run_flags),
             "%{download_commands}": _generate_download_commands(ctx, packages, additional_repos),
             "%{image_id_extractor_path}": "${RUNFILES}/%s" % runfile(ctx, ctx.executable._extract_image_id),
             "%{image_tar}": image_tar.short_path,
