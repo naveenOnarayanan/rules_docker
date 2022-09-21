@@ -112,7 +112,7 @@ def _impl(ctx, image_tar = None, installables_tar = None, installation_cleanup_c
             "%{base_image_tar}": image_tar.path,
             "%{docker_flags}": " ".join(toolchain_info.docker_flags),
             "%{docker_tool_path}": docker_path(toolchain_info),
-            "%{docker_run_flags}": ctx.attr.docker_run_flags,
+            "%{docker_run_flags}": " ".join(ctx.attr.docker_run_flags),
             "%{image_id_extractor_path}": ctx.executable._extract_image_id.path,
             "%{installables_tar}": installables_tar_path,
             "%{installer_script}": install_script.path,
