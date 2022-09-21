@@ -112,6 +112,7 @@ def _impl(ctx, image_tar = None, installables_tar = None, installation_cleanup_c
             "%{base_image_tar}": image_tar.path,
             "%{docker_flags}": " ".join(toolchain_info.docker_flags),
             "%{docker_tool_path}": docker_path(toolchain_info),
+            "%{docker_run_flags}": ctx.attr.docker_run_flags,
             "%{image_id_extractor_path}": ctx.executable._extract_image_id.path,
             "%{installables_tar}": installables_tar_path,
             "%{installer_script}": install_script.path,
@@ -169,6 +170,10 @@ _attrs = {
     "output_image_name": attr.string(
         doc = ("Name of container_image produced with the packages installed."),
         mandatory = True,
+    ),
+    "docker_run_flags": attr.string_list(
+        dock = "list of docker run flags to pass.",
+        mandatory = False,
     ),
     "_config_stripper": attr.label(
         default = "//docker/util:config_stripper",

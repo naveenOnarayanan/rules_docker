@@ -4,6 +4,7 @@ set -o errexit
 # Resolve the docker tool path
 DOCKER="%{docker_tool_path}"
 DOCKER_FLAGS="%{docker_flags}"
+DOCKER_RUN_FLAGS="%{docker_run_flags}"
 
 if [[ -z "$DOCKER" ]]; then
     echo >&2 "error: docker not found; do you need to manually configure the docker toolchain?"
@@ -51,7 +52,7 @@ for f in $tmpdir/*; do
 done
 "$DOCKER" $DOCKER_FLAGS rm $cid
 
-cid=$("$DOCKER" $DOCKER_FLAGS run -d -v $vid:/tmp/pkginstall --privileged $image_id /tmp/pkginstall/installer.sh)
+cid=$("$DOCKER" $DOCKER_FLAGS $DOCKER_RUN_FLAGS run -d -v $vid:/tmp/pkginstall --privileged $image_id /tmp/pkginstall/installer.sh)
 
 "$DOCKER" $DOCKER_FLAGS attach $cid || true
 

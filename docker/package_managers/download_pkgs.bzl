@@ -109,6 +109,7 @@ def _impl(ctx, image_tar = None, packages = None, additional_repos = None, outpu
         substitutions = {
             "%{docker_flags}": " ".join(toolchain_info.docker_flags),
             "%{docker_tool_path}": docker_path(toolchain_info),
+            "%{docker_run_flags}": ctx.attr.docker_run_flags,
             "%{download_commands}": _generate_download_commands(ctx, packages, additional_repos),
             "%{image_id_extractor_path}": ctx.executable._extract_image_id.path,
             "%{image_tar}": image_tar.path,
@@ -135,6 +136,7 @@ def _impl(ctx, image_tar = None, packages = None, additional_repos = None, outpu
         substitutions = {
             "%{docker_flags}": " ".join(toolchain_info.docker_flags),
             "%{docker_tool_path}": docker_path(toolchain_info),
+            "%{docker_run_flags}": ctx.attr.docker_run_flags,
             "%{download_commands}": _generate_download_commands(ctx, packages, additional_repos),
             "%{image_id_extractor_path}": "${RUNFILES}/%s" % runfile(ctx, ctx.executable._extract_image_id),
             "%{image_tar}": image_tar.short_path,
@@ -175,6 +177,10 @@ _attrs = {
         doc = "list of packages to download. e.g. ['curl', 'netbase']",
         mandatory = True,
     ),
+    "docker_run_flags": attr.string_list(
+        dock = "list of docker run flags to pass.",
+        mandatory = False,
+    ),
     "_extract_image_id": attr.label(
         default = Label("//contrib:extract_image_id"),
         cfg = "host",
@@ -184,7 +190,7 @@ _attrs = {
     "_run_download_tpl": attr.label(
         default = Label("//docker/package_managers:run_download.sh.tpl"),
         allow_single_file = True,
-    ),
+    )
 }
 
 _outputs = {
